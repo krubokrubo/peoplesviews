@@ -20,12 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'jxw*-!6h)td!oj^gd0m$z6g=x@qz3j^g26r7(1w9(&e5gr&#%j'
+# SECRET_KEY = 'jxw*-!6h)td!oj^gd0m$z6g=x@qz3j^g26r7(1w9(&e5gr&#%j'
+SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['peoplesviews.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -123,6 +124,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'dist/static'),
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Cross-Origin for development
 CORS_ORIGIN_ALLOW_ALL = False

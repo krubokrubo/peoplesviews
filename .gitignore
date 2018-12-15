@@ -25,3 +25,4 @@ __pycache__
 # Django local settings and sqlite database 
 db.sqlite3
 local_settings.py
+.env
