@@ -1,7 +1,8 @@
 .DS_Store
 node_modules/
 # vue init webpack starts out ignoring /dist/ but I don't know why
-# /dist/
+# restore dist/ to .gitignore before deploying to Heroku
+dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -18,6 +19,9 @@ yarn-error.log*
 # Python virtual environment and cache
 venv/
 __pycache__
+.Python
+*.pyc
 
-# Django sqlite database
+# Django local settings and sqlite database 
 db.sqlite3
+local_settings.py
