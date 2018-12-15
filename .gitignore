@@ -1,6 +1,7 @@
 .DS_Store
 node_modules/
-/dist/
+# vue init webpack starts out ignoring /dist/ but I don't know why
+# /dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -14,5 +15,9 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-# Python virtual environment
+# Python virtual environment and cache
 venv/
+__pycache__
+
+# Django sqlite database
+db.sqlite3
