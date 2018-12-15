@@ -23,7 +23,7 @@ export default {
   methods: {
     FetchData: function() {
       var app = this;
-      axios.get("/api_example/").then(response => {
+      axios.get(process.env.API_URL + "/api_example/").then(response => {
         app.names = response.data.names;
       });
     },

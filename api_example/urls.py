@@ -2,5 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('/', views.names),
+    path('', views.names),
+    path('remoteip', views.remoteip),
 ]
