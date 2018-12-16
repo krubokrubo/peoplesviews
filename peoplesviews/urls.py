@@ -20,6 +20,7 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^$', TemplateView.as_view(template_name='index.html')),
     path('api_example/', include('api_example.urls')),
+    url('main/choose', TemplateView.as_view(template_name='choose.html')),
+    url(r'^.*$', TemplateView.as_view(template_name='index.html')),
 ]

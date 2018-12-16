@@ -4,6 +4,7 @@
     <p>
       {{winner}}
     </p>
+    <router-view></router-view>
   </div>
 </template>
 
