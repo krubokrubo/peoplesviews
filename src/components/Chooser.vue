@@ -1,113 +1,111 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
+  <div class="main">
+    <div class="instructions">
+      Select as many views as you like.
+      Then move them into the order you prefer.
+    </div>
+    <ul class="choices chosen">
+      <li v-for="choice in chosenchoices" class="chosen">
+        {{ choice.title }}
       </li>
     </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
+    <ul class="choices">
+      <li v-for="choice in choices">
+        {{ choice.title }}
       </li>
     </ul>
+    <div class="afterchoices">
+      <div class="instructions">
+        <span>When done, click here:</span>
+        <input
+          class="submit"
+          type="submit"
+          value="Submit"
+          :disabled="!submitenabled"
+        >
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Chooser',
+  computed: {
+    submitenabled: function() {
+      return false; //this.chosenchoices.length == 0;
+    },
+  },
   data () {
     return {
-      msg: 'This is the Chooser component!'
-    }
+      choices: [
+        { id: 0, rank: 1, chosen: false,
+          title: 'Test Choice 1' },
+        { id: 1, rank: 2, chosen: false,
+          title: 'Test Choice 2' },
+      ],
+      chosenchoices: [
+        { id: 2, rank: 3, chosen: true,
+          title: 'Test Choice 3 chosen' },
+      ],
+    };
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+  .main {
+    max-width: 800px;
+    margin: 0px auto 0px auto;
+    padding: 20px 0px 20px 0px;
+    border-radius: 12px;
+    background: #aa9422;
+    border: 5px outset #400;
+  }
+  .instructions {
+    padding: 20px 20px 20px 20px;
+    background: #cef;
+    color: #730;
+    font-size: 15pt;
+    font-style: italic;
+    text-align: center;
+  }
+  .afterchoices .instructions {
+    margin: 30px 0px 30px 0px;
+    padding: 5px 20px 5px 20px;
+  }
+  .submit {
+    width: 140px;
+    height: 50px;
+    border-radius: 5px;
+    border: 3px outset #aa9422;
+    vertical-align: middle;
+    background: #aa9422;
+    color: #444;
+    font-size: 15pt;
+    font-weight: bold;
+  }
+  .submit[disabled] {
+    color: #777;
+  }
+  ul.choices {
+    list-style-type: none;
+    margin: 0px auto 0px auto;
+    padding: 0px;
+    max-width: 600px;
+  }
+  ul.choices li {
+    margin: 15px;
+    padding: 8px;
+    border-radius: 12px;
+    border: 5px outset #33c;
+    font-size: 15pt;
+    background: #cef;
+    color: #730;
+  }
+  ul.choices li.chosen {
+    background: #33c;
+    color: #ffe;
+  }
 </style>
