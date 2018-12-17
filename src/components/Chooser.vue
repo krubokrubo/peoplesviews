@@ -36,6 +36,7 @@
           type="submit"
           value="Submit"
           :disabled="!submitenabled"
+          @click="submit"
         >
       </div>
     </div>
@@ -81,6 +82,9 @@ export default {
     unchoose: function(choice, index) {
       choice.chosen = false;
       this.choices.unshift(this.chosenchoices.splice(index, 1)[0]);
+    },
+    submit: function() {
+      alert('Sorry, the "Submit" function hasn\'t been built yet. Hopefully it will work later.');
     },
   },
 }
