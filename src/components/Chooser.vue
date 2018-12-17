@@ -52,11 +52,6 @@ export default {
     draggable,
     ChoiceItem,
   },
-  computed: {
-    submitenabled: function() {
-      return false; //this.chosenchoices.length == 0;
-    },
-  },
   data () {
     return {
       choices: [
@@ -67,18 +62,25 @@ export default {
       ],
       chosenchoices: [
         { id: 2, rank: 3, chosen: true,
-          title: 'Test Choice 3 chosen' },
+          title: 'Test Choice 3' },
         { id: 3, rank: 4, chosen: true,
-          title: 'Test Choice 4 chosen' },
+          title: 'Test Choice 4' },
       ],
     };
   },
+  computed: {
+    submitenabled: function() {
+      return this.chosenchoices.length != 0;
+    },
+  },
   methods: {
     choose: function(choice, index) {
-      alert('This is the choose function called with index '+index);
+      choice.chosen = true;
+      this.chosenchoices.push(this.choices.splice(index, 1)[0]);
     },
     unchoose: function(choice, index) {
-      alert('This is the unchoose function called with index '+index);
+      choice.chosen = false;
+      this.choices.unshift(this.chosenchoices.splice(index, 1)[0]);
     },
   },
 }
