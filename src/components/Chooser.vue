@@ -5,9 +5,16 @@
       Then move them into the order you prefer.
     </div>
     <ul class="choices chosen">
-      <li v-for="choice in chosenchoices" :key="choice.id" class="chosen">
-        {{ choice.title }}
-      </li>
+      <draggable v-model="chosenchoices">
+        <ChoiceItem
+          v-for="(choice, index) in chosenchoices"
+          :key="choice.id"
+          :choice="choice"
+          :arrayindex="index"
+          :ischosen="true"
+          @clicked="unchoose">
+        </ChoiceItem>
+      </draggable>
     </ul>
     <ul class="choices">
       <draggable v-model="choices">
@@ -16,6 +23,7 @@
           :key="choice.id"
           :choice="choice"
           :arrayindex="index"
+          :ischosen="false"
           @clicked="choose">
         </ChoiceItem>
       </draggable>
@@ -60,12 +68,17 @@ export default {
       chosenchoices: [
         { id: 2, rank: 3, chosen: true,
           title: 'Test Choice 3 chosen' },
+        { id: 3, rank: 4, chosen: true,
+          title: 'Test Choice 4 chosen' },
       ],
     };
   },
   methods: {
     choose: function(choice, index) {
       alert('This is the choose function called with index '+index);
+    },
+    unchoose: function(choice, index) {
+      alert('This is the unchoose function called with index '+index);
     },
   },
 }
