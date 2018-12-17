@@ -5,14 +5,20 @@
       Then move them into the order you prefer.
     </div>
     <ul class="choices chosen">
-      <li v-for="choice in chosenchoices" class="chosen">
+      <li v-for="choice in chosenchoices" :key="choice.id" class="chosen">
         {{ choice.title }}
       </li>
     </ul>
     <ul class="choices">
-      <li v-for="choice in choices">
-        {{ choice.title }}
-      </li>
+      <draggable v-model="choices">
+        <ChoiceItem
+          v-for="(choice, index) in choices"
+          :key="choice.id"
+          :choice="choice"
+          :arrayindex="index"
+          @clicked="choose">
+        </ChoiceItem>
+      </draggable>
     </ul>
     <div class="afterchoices">
       <div class="instructions">
@@ -29,8 +35,15 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+import ChoiceItem from './ChoiceItem.vue'
+
 export default {
   name: 'Chooser',
+  components: {
+    draggable,
+    ChoiceItem,
+  },
   computed: {
     submitenabled: function() {
       return false; //this.chosenchoices.length == 0;
@@ -49,7 +62,12 @@ export default {
           title: 'Test Choice 3 chosen' },
       ],
     };
-  }
+  },
+  methods: {
+    choose: function(choice, index) {
+      alert('This is the choose function called with index '+index);
+    },
+  },
 }
 </script>
 
