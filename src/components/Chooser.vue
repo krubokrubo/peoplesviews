@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import draggable from 'vuedraggable'
 import ChoiceItem from './ChoiceItem.vue'
 
@@ -55,18 +56,9 @@ export default {
   },
   data () {
     return {
-      choices: [
-        { id: 0, rank: 1, chosen: false,
-          title: 'Test Choice 1' },
-        { id: 1, rank: 2, chosen: false,
-          title: 'Test Choice 2' },
-      ],
-      chosenchoices: [
-        { id: 2, rank: 3, chosen: true,
-          title: 'Test Choice 3' },
-        { id: 3, rank: 4, chosen: true,
-          title: 'Test Choice 4' },
-      ],
+      choices: [],
+      chosenchoices: [],
+      apichoices: [],
     };
   },
   computed: {
@@ -74,7 +66,16 @@ export default {
       return this.chosenchoices.length != 0;
     },
   },
+  mounted: function() {
+    this.getAvailableChoices();
+  },
   methods: {
+    getAvailableChoices: function() {
+      axios.get("/api/choice/").then(response => {
+        this.apichoices = response.data;
+        this.choices = response.data;
+      });
+    },
     choose: function(choice, index) {
       choice.chosen = true;
       this.chosenchoices.push(this.choices.splice(index, 1)[0]);
