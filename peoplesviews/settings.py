@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['peoplesviews.herokuapp.com', 'localhost']
 INSTALLED_APPS = [
     'choose',
     'corsheaders',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
