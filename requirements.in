@@ -1,0 +1,6 @@
+django
+djangorestframework
+gunicorn
+pip-chill
+pip-tools
+whitenoise
