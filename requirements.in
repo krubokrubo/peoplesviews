@@ -5,3 +5,4 @@ gunicorn
 pip-chill
 pip-tools
 whitenoise
+psycopg2
