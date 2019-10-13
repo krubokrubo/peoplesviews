@@ -1,0 +1,15 @@
+People's Views
+<h1>Poll: {{ object.title }}</h1>
+
+<h4>Current results</h4>
+<p>As of {{ object.pollresult_set.first.datestamp }}:<p>
+<pre>{{ object.pollresult_set.first.result }}</pre>
+
+<h4>Options:</h4>
+<ul>
+  {% for candidate in poll.candidate_set.all %}
+    <li>{{ candidate.title }}</li>
+  {% endfor %}
+</ul>
+
+<h4>{{ object.vote_set.count }} votes cast so far</h4>
