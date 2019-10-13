@@ -27,4 +27,5 @@ urlpatterns = [
          poll_views.PollMainView.as_view(),
          name='poll'),
     path('api/', include('config.api_urls')),
+    path('api-auth/', include('rest_framework.urls')),
 ]
