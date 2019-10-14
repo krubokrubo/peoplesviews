@@ -10,12 +10,15 @@ urlpatterns = [
     path('poll/<int:pk>/',
         views.PollDetail.as_view(),
         name='poll-detail'),
-#   path('poll/<int:poll>/candidate/',
-#       views.CandidatesByPoll.as_view(),
-#       name='candidates-by-poll'),
     path('candidate/',
         views.CandidateList.as_view(),
         name='candidate-list'),
+    path('vote/',
+        views.VoteList.as_view(),
+        name='vote-list'),
+    path('result/',
+        views.ResultList.as_view(),
+        name='result-list'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

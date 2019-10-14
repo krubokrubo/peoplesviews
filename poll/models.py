@@ -1,7 +1,7 @@
 from django.db import models
 
 class Poll(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, unique=True)
     owner = models.ForeignKey('auth.User', on_delete=models.PROTECT)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -17,11 +17,19 @@ class Candidate(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['poll','title'],
+                                    name='unique_candidates_per_poll'),
+        ]
+
 class Vote(models.Model):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     voter = models.ForeignKey('auth.User', on_delete=models.CASCADE, blank=True, null=True)
-    datestamp = models.DateTimeField(auto_now=True)
+    submitted = models.DateTimeField(auto_now=True)
+    ranked_choices = models.CharField(max_length=1000)
 
+# NOT USED CURRENTLY. SIMPLY SAVING ALL RANKED_CHOICES IN THE VOTE OBJECT
 class VoteLine(models.Model):
     vote = models.ForeignKey(Vote, on_delete=models.CASCADE)
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
@@ -35,7 +43,8 @@ class VoteLine(models.Model):
                                     name='unique_candidates_per_vote'),
         ]
 
-class PollResult(models.Model):
+class Result(models.Model):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     datestamp = models.DateTimeField(auto_now=True)
-    result = models.TextField()
+    method_name = models.CharField(max_length=255)
+    detail = models.TextField()

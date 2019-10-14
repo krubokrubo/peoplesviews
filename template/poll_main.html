@@ -13,3 +13,13 @@ People's Views
 </ul>
 
 <h4>{{ object.vote_set.count }} votes cast so far</h4>
+
+<h3><a href="/api/poll/">List all polls or create new poll</a></h3>
+<h3><a href="/api/candidate/?poll={{ object.id }}">List options or add new option(s)</a></h3>
+<h3><a href="/api/vote/?poll={{ object.id }}">List votes or add your own vote</a></h3>
+
+
+<form method="POST">
+  {% csrf_token %}
+  <input type="submit" name="action" value="Calculate results">
+</form>
