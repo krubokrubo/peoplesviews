@@ -1,1 +1,1 @@
-web: gunicorn config.wsgi --access-logfile=-
+web: gunicorn peoplesviews.wsgi --access-logfile=-
