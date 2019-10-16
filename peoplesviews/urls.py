@@ -1,4 +1,4 @@
-"""config URL Configuration
+"""peoplesviews URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
@@ -26,6 +26,6 @@ urlpatterns = [
     path('poll/<int:pk>/',
          poll_views.PollMainView.as_view(),
          name='poll'),
-    path('api/', include('config.api_urls')),
+    path('api/', include('peoplesviews.api_urls')),
     path('api-auth/', include('rest_framework.urls')),
 ]
