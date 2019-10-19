@@ -15,17 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
 from django.views.generic import TemplateView
 from poll import views as poll_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',
-         TemplateView.as_view(template_name='index.html'),
+         TemplateView.as_view(template_name='home.html'),
          name='home'),
     path('poll/<int:pk>/',
          poll_views.PollMainView.as_view(),
          name='poll'),
     path('api/', include('peoplesviews.api_urls')),
     path('api-auth/', include('rest_framework.urls')),
+    url(r'^v/.*$',
+        TemplateView.as_view(template_name='index.html')),
 ]

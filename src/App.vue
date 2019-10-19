@@ -1,17 +1,30 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div id="headbar">
+      <div id="logo">
+        <a href="/">
+          <h3>People's Views</h3>
+          <i>A wider range of opinions</i>
+        </a>
+      </div>
+      <PollQuestion />
+    </div>
+    <PollVoting />
+    <PollResults />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import PollQuestion from './components/PollQuestion.vue'
+import PollVoting from './components/PollVoting.vue'
+import PollResults from './components/PollResults.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    PollQuestion,
+    PollVoting,
+    PollResults
   }
 }
 </script>
@@ -22,7 +35,18 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+#headbar {
+  background: cyan;
+}
+#logo {
+  float: left;
+  width: 200px;
+  text-align: left;
+}
+#logo h3 {
+  margin: 0px;
+  font-family: Times;
+  text-decoration: none;
 }
 </style>
