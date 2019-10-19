@@ -9,8 +9,10 @@
       </div>
       <PollQuestion :title="title" />
     </div>
-    <PollVoting :rankedchoices="myVote" />
-    <PollResults :candidates="candidates" @choose-candidate="chooseCandidate($event)" />
+    <PollVoting :rankedchoices="myVote" :pollid="pollId" />
+    <PollResults
+      :candidates="candidates"
+      @choose-candidate="chooseCandidate($event)" />
   </div>
 </template>
 

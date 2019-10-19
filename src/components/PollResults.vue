@@ -4,7 +4,12 @@
     <p>Poll results are supposed to go here, showing other people's answers that you can click...</p>
     <h4>All submitted answers so far</h4>
     <div class="answerbuttons">
-      <div v-for="candidate in candidates" v-item="candidate" :key="candidate.id" @click="$emit('choose-candidate', candidate)" class="answerbutton">
+      <div v-for="candidate in candidates"
+           v-item="candidate"
+           :key="candidate.id"
+           @click="$emit('choose-candidate', candidate)"
+           class="answerbutton"
+        >
         {{ candidate.title }}        
       </div>
     </div>
@@ -33,6 +38,7 @@ div#results {
 }
 .answerbuttons {
   display: flex;
+  flex-flow: row wrap;
 }
 .answerbutton {
   border: 4px outset gray;
