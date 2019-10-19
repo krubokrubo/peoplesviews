@@ -5,21 +5,9 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
   name: 'PollQuestion',
-  data (){
-    return {
-      title: 'Loading...',
-      currentRoute: window.location.pathname,
-      pollId: window.location.pathname.substring(3)
-    };
-  },
-  mounted: function (){
-    axios
-      .get('/api/poll/'+this.pollId+'.json')
-      .then(response => (this.title = response.data.title));
-  }
+  props: ['title']
 }
 </script>
 
