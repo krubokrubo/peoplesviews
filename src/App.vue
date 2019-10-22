@@ -6,10 +6,22 @@
           <h3>People's Views</h3>
           <i>A wider range of opinions</i>
         </a>
+        <div v-if="checkLogin.is_authenticated"
+           @click="showLogout = true"
+          >
+          <br/><br/>
+          Welcome {{ checkLogin.username }}
+        </div>
+        <div v-if="showLogout">
+          <a :href="checkLogin.logout_url">Log out</a>
+        </div>
       </div>
       <PollQuestion :title="title" />
     </div>
-    <PollVoting :rankedchoices="myVote" :pollid="pollId" />
+    <PollVoting
+      :rankedchoices="myVote"
+      :pollid="pollId"
+      :checklogin="checkLogin" />
     <PollResults
       :candidates="candidates"
       @choose-candidate="chooseCandidate($event)" />
@@ -35,7 +47,9 @@ export default {
       pollId: window.location.pathname.substring(3),
       title: 'Loading question...',
       candidates: [],
-      myVote: []
+      myVote: [],
+      checkLogin: {},
+      showLogout: false
     }
   },
   mounted: function() {
@@ -45,6 +59,12 @@ export default {
     axios
       .get('/api/candidate.json?poll='+this.pollId)
       .then(response => (this.candidates = response.data))
+    axios
+      .get('/api-check-login.json')
+      .then(response => {
+         this.checkLogin = response.data
+         this.checkLogin.currentPath = window.location.pathname
+      })
   },
   methods: {
     chooseCandidate: function(candidate) {

@@ -1,33 +1,41 @@
 <template>
   <div id="pollvoting">
-   <h3>What Are Your Views?</h3>
-   <p v-if="rankedchoices.length == 0">
-     Click your favorite answers or
-   </p>
-   <ol class="ranked-choices">
-     <li v-for="candidate in rankedchoices" :key="candidate.id">
-       {{ candidate.title }}
-     </li>
-   </ol>
-   <p v-if="addInputState == 'hidden'"
-       @click="showAddInput"
-       class="click-show-add"
-     >
-     add a new answer
-   </p>
-   <input v-if="addInputState != 'hidden'"
-          :disabled="addInputState == 'working'"
-          :ref="'addinput'"
-          v-model="addInput"
-          @change="addCandidate"
-     >
-   <p v-if="rankedchoices.length > 0" class="submit-vote">
-     Got all your views?<br>
-     <button @click="submitVote">
-       Submit your views now
-     </button>
-   </p>
- </div>
+    <h3>What Are Your Views?</h3>
+    <div v-if="!checklogin.is_authenticated">
+      <p>
+        <a :href="checklogin.login_url+'?next='+checklogin.currentPath">Log in</a>
+        to submit your favorite answers
+      </p>
+    </div>
+    <div v-if="checklogin.is_authenticated">
+      <p v-if="rankedchoices.length == 0">
+        Click your favorite answers or
+      </p>
+      <ol class="ranked-choices">
+        <li v-for="candidate in rankedchoices" :key="candidate.id">
+          {{ candidate.title }}
+        </li>
+      </ol>
+      <p v-if="addInputState == 'hidden'"
+          @click="showAddInput"
+          class="click-show-add"
+        >
+        add a new answer
+      </p>
+      <input v-if="addInputState != 'hidden'"
+             :disabled="addInputState == 'working'"
+             :ref="'addinput'"
+             v-model="addInput"
+             @change="addCandidate"
+        >
+      <p v-if="rankedchoices.length > 0" class="submit-vote">
+        Got all your views?<br>
+        <button @click="submitVote">
+          Submit your views now
+        </button>
+      </p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -39,7 +47,8 @@ export default {
   name: 'PollVoting',
   props: [
     'pollid',
-    'rankedchoices'
+    'rankedchoices',
+    'checklogin'
   ],
   data: function() {
     return {
@@ -76,11 +85,14 @@ export default {
           ranked_choices: rankingString
         })
         .then(response => {
-          alert('Vote submitted! '+response.data.id)
-          window.location.reload()
+          alert('Vote submitted! Click ok for new results. (id='+response.data.id+')')
+          window.location.href = '/poll/'+this.pollid+'/recalculate'
         })
         .catch(error => {
-          alert(error.response)
+          alert('Sorry, there was an error.')
+          /* eslint-disable no-console */
+          console.log(error.response)
+          /* eslint-enable no-console */
         })
     }
   }

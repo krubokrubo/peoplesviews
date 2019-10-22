@@ -29,6 +29,11 @@ class Vote(models.Model):
     submitted = models.DateTimeField(auto_now=True)
     ranked_choices = models.CharField(max_length=1000)
 
+    def get_username(self):
+        if self.voter is None:
+            return 'None'
+        return self.voter.username
+
 # NOT USED CURRENTLY. SIMPLY SAVING ALL RANKED_CHOICES IN THE VOTE OBJECT
 class VoteLine(models.Model):
     vote = models.ForeignKey(Vote, on_delete=models.CASCADE)

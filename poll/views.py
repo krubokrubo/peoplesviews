@@ -5,6 +5,7 @@ from django.http import HttpResponse, StreamingHttpResponse
 from poll import models
 from poll import serializers
 from poll import permissions
+from poll import compute
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.generics import ListAPIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
@@ -13,27 +14,6 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 import time
 
 
-# this doesn't work with current configuration :(
-def chunked_result_calc(pk):
-    yield '<pre>Thank you for triggering the RESULT CALCULATION function.\n'
-    yield 'Please wait while the result is being calculated.\n'
-    yield ' ' * 1024
-    yield '\n'
-    poll = models.Poll.objects.get(id=pk)
-    candidates = poll.candidate_set.all()
-    votes = poll.vote_set.all()
-    yield 'A total of {} votes were cast.\n'.format(votes.count())
-    for vote in votes:
-        yield 'Vote: {}\n'.format(vote.ranked_choices)
-    time.sleep(2)
-    yield 'This could take a while...\n'
-    time.sleep(4)
-    yield '...since the calculations are not yet built. Sorry. Goodbye.\n'
-    yield '</pre>'
-
-
-#def calculate_result(pk):
-#    yield 'Calculating the result of the 
 
 
 class PollMainView(DetailView):
@@ -41,10 +21,13 @@ class PollMainView(DetailView):
     template_name = 'poll_main.html'
 
     def post(self, request, pk):
-        return StreamingHttpResponse(chunked_result_calc(pk))
+        return StreamingHttpResponse(compute.chunked_result(pk))
 #       return HttpResponse('''Pk was {} and you posted the following data:
 #                            <pre>{}</pre>'''
 #           .format(pk, escape(request.POST)))
+
+def recalculate(request, pk):
+    return StreamingHttpResponse(compute.chunked_result(pk))
 
 
 # REST API views below

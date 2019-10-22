@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
 from django.views.generic import TemplateView
+from peoplesviews import views
 from poll import views as poll_views
 
 urlpatterns = [
@@ -27,8 +28,14 @@ urlpatterns = [
     path('poll/<int:pk>/',
          poll_views.PollMainView.as_view(),
          name='poll'),
+    path('poll/<int:pk>/recalculate',
+         poll_views.recalculate,
+         name='recalculate'),
     path('api/', include('peoplesviews.api_urls')),
     path('api-auth/', include('rest_framework.urls')),
+    path('api-check-login.json',
+         views.check_login,
+         name='api-check-login'),
     url(r'^v/.*$',
         TemplateView.as_view(template_name='index.html')),
 ]
