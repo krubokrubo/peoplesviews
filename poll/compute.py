@@ -13,7 +13,7 @@ def chunked_result(pk):
     poll = models.Poll.objects.get(id=pk)
     candidates = poll.candidate_set.all()
     candidates = {c.id: c.title for c in candidates}
-    yield 'The candidates were:\n'
+    yield 'There were {} candidates:\n'.format(len(candidates))
     for id in candidates:
         yield '{}: {}\n'.format(id, candidates[id])
     votes = poll.vote_set.all()
